@@ -54,7 +54,8 @@ public class User {
 	
 	/** Log in method used for logging in a User. In the context of the application,
 	 * this means getting the object's attributes filled out with the fields from
-	 * the MySQL database. 
+	 * the MySQL database.<br>
+	 * Method of authentication is to 
 	 */
 	public void login() {
 		try {
