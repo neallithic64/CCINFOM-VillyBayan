@@ -1,9 +1,56 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Village Officers & Staff
+	1. Village officers and staff are registered by the system administrator.
+	2. When the system administrator registers a village officer or staff, the following details are recorded: username, password, email address, last name, first name, birthday, sex, complete address, a scanned copy of their proof of billing, position, and their start date in office.
+	3. Usernames are permanent and cannot be changed.
+	4. Email address are unique, once registered, it cannot be used by other users.
+	5. Users can update their information except for their username and complete name. Updating of username and complete name can only be done by the system administrator.
+	6. Once the officer’s/staff’s administration/job ends, the end date is recorded and their account is changed to a resident user account. Similarly, if a resident with an existing user account is elected/hired as a village officer/staff, their account is changed to a village officer/staff user account and additional details are recorded accordingly by the system administrator.
+	7. At the start of the web application, the first officer or staff registered is initially assigned as the system administrator.
+	8. Only village officers and/or staff can be assigned as system administrators.
+	9. There can be up to four (4) village officers and/or staff who can be assigned as system administrators. At least one (1) system administrator should be a village officer.
+	10. Village officers and staff users will be able to access functions available to resident users.
+	11. Users can register further as an individual resource and/or service provider. Village officers and staff who own businesses which can provide for the needs of the village should register them separately as a supplier user. Registered providers will require additional information and requirements for approval, depending on the resource and/or service to be provided.
+
+Supplier Users
+	1. Business owners can register themselves as supplier users through the web application, for the approval of the system administrator. Mobile/cart owners/vendors may alternatively register with the help of the system administrator.
+	2. Before supplier users can be registered, the company should first be registered. The following information about the company is recorded: company name, company address (they should indicate whether the company is in the village/subdivision), business type, daily operating schedule, email address, phone numbers, and a scanned copy of their Certificate of Registration (BIR Form 2303). For businesses located outside the village/subdivision, information on distance from the village gate/s should be provided. When all the requirements for the registration is complete, the web application automatically tags the status of the business registration – “For Approval”. Once approved, the business is assigned a businessID and may start adding their supplier users.
+	3. The business representative may opt to re-submit scanned documents to replace their previously submitted documents. The system administrator assigned to read the email will simply update the records. Previously submitted documents are deleted from the application.
+	4. Only system administrators can approve registration. System administrators usually check the list of business registrations for approval, go through each record, verify completeness of requirements, and approve the registration. When the system administrator disapproves the registration, he/she needs to write the reason for disapproving registration. Disapproval and reasons for disapproval of registration is sent to the business representative through email.
+	5. Supplier users can either be a staff or manager of the company. A staff handles transactions with residents and the manager monitors what is happening with the company and makes decisions on issues raised to him/her.
+	6. Each company may register up to three (3) supplier users: one (1) manager and a maximum of two (2) staff.
+	7. When supplier users register for an account, the following details are recorded: complete name, complete address, birthday, date hired, days in the week of work, username and password, email address, and mobile phone numbers. Usernames are permanent and cannot be changed.
+	8. Email address are unique, once registered, it cannot be used by other users.
+	9. Supplier users can update their information except for their complete name. Updating of complete name can only be done by system administrators.
+	10. More supplier users can be added under a registered business later on, as long as the maximum number of supplier users has not yet been reached.
+	11. When a business closes, it is tagged as “Non-operational” and all supplier users associated with the business are deactivated.
+
+Resident Users
+	1. Residents of a village can register themselves through the web application.
+	2. Residents register their desired username, password, email address, last name, first name, birthday, sex, complete address, and a scanned copy of their proof of billing (for the verification of their address).
+	3. Each household can have up to two (2) registered users in the application.
+	4. Email address are unique, once registered, it cannot be used by other users.
+	5. Resident users can update their information except for their username and complete name. Updating of username and complete name can only be done through the system administrator.
+	6. When all the requirements for the registration is complete, the web application automatically tags the status of the registration – “For Approval”.
+	7. The user may opt to re-submit scanned documents to replace their previously submitted documents. The system administrator assigned to read the email will simply update the records. Previously submitted documents are deleted from the application.
+	8. Only system administrators can approve registration. System administrators usually check the list of resident registrations for approval, go through each record, verify completeness of requirements, and approve the registration. When the system administrator disapproves the registration, he/she needs to write the reason for disapproving registration. Disapproval and reasons for disapproval of registration is sent to the resident through email.
+	9. Once the resident’s account is approved, they can register further as an individual resource and/or service provider. Residents who own businesses which can provide for the needs of the village should register them separately as a supplier user. Registered providers will require additional information and requirements for approval, depending on the resource and/or service to be provided.
+
+Resident Groups
+	1. Residents can form themselves as a group, pertaining to their gated community, block, or street within the village/subdivision. These groups can be used to consolidate requests for resources and/or services.
+	2. Any resident can create a group. Whoever creates the group assumes the role of the lead resident of the group. The lead resident can invite members to and remove members from the group.
+	3. When a group is created, the application automatically assigns it a unique groupID. Creation of resident groups does not require approval.
+	4. Group details include the block/street address of the group. A group will remain active as long as there are at least three (3) members in it, including the lead resident. Once the number of members fall below 3, it will be deactivated by the system administrator.
+	5. Invites to the group is accepted by the invited resident. A resident can be part of only one (1) resident group, but can still be part of other pooled requests.
+	6. Group members can opt to remove themselves from the group.
+
+Submitted Documents
+	1. Submitted files are stored in a repository. The folder, the type of file and filename is recorded in the application. The application automatically assigns a fileID to the file.
+	2. The file is associated with a user that owns the submitted file.
+	3. The web application also provides a link to the files submitted by a user. Of course, this is only accessible by the user and also by the system administrators.
 -->
+
 <html lang="en">
 	<head>
 		<title>User Registration</title>
@@ -17,29 +64,152 @@ and open the template in the editor.
 		<div class="container">
 			<h1 style="text-align: center">User Registration</h1>
 		</div>
-		<div class="container">
-			<form class="form-horizontal" action=".jsp">
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="email">Email:</label>
-					<div class="col-sm-10">
-						<input type="email" class="form-control" placeholder="Enter email" name="email">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="password">Password:</label>
-					<div class="col-sm-10">
-						<input type="password" class="form-control" placeholder="Enter password" name="password">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">Submit</button>
-					</div>
-				</div>
-			</form>
+		
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#offstaff">Village Officer & Staff</a></li>
+			<li><a data-toggle="tab" href="#company">Company</a></li>
+			<li><a data-toggle="tab" href="#supplier">Supplier User</a></li>
+			<li><a data-toggle="tab" href="#resident">Resident User</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div id="offstaff" class="tab-pane fade in active">
+				<h3>Village Officer & Staff Registration</h3>
+						<div class="container">
+							<form class="form-horizontal" action=".jsp">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="email">Email:</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" placeholder="Enter email" name="email">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="password">Password:</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" placeholder="Enter password" name="password">
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+			</div>
+			<div id="company" class="tab-pane fade">
+				<h3>Company Registration</h3>
+						<div class="container">
+							<form class="form-horizontal" action=".jsp">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="email">Email:</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" placeholder="Enter email" name="email">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="password">Password:</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" placeholder="Enter password" name="password">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+			</div>
+			<div id="supplier" class="tab-pane fade">
+				<h3>Supplier User Registration</h3>
+						<div class="container">
+							<form class="form-horizontal" action=".jsp">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="email">Email:</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" placeholder="Enter email" name="email">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="password">Password:</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" placeholder="Enter password" name="password">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+			</div>
+			<div id="resident" class="tab-pane fade">
+				<h3>Resident User Registration</h3>
+						<div class="container">
+							<form class="form-horizontal" action="usRegProc.jsp">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="username">Username:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" placeholder="Enter username" name="username">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="password">Password:</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" placeholder="Enter password" name="password">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="email">Email:</label>
+									<div class="col-sm-10">
+										<input type="email" class="form-control" placeholder="Enter email" name="email">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label class="control-label">Complete Name:</label>
+										<input type="text" class="form-control" placeholder="First name" name="firstname">
+									</div>
+									<div class="form-group col-md-6">
+										<label class="control-label">remove_this</label>
+										<input type="text" class="form-control" placeholder="Last name" name="lastname">
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label for="address">Complete Address:</label>
+										<input type="text" class="form-control" placeholder="Enter address" id="address">
+									</div>
+									<div class="form-group col-md-2">
+										<label for="gender">Gender:</label>
+										<select id="gender" class="form-control">
+											<option selected>Female</option>
+											<option>Male</option>
+										</select>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="billingProof">Proof of Billing:</label>
+										<input type="file" class="form-control" id="billingProof">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</div>
+							</form>
+						</div>
+			</div>
 		</div>
+		
 		<button type="button" onclick="window.location.href = 'index.html';" class="btn btn-default">ohnogoback</button>
 	</body>
 </html>
