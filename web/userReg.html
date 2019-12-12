@@ -158,47 +158,50 @@ Submitted Documents
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="username">Username:</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" placeholder="Enter username" name="username">
+										<input type="text" class="form-control" placeholder="Enter username" name="username" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="password">Password:</label>
 									<div class="col-sm-10">
-										<input type="password" class="form-control" placeholder="Enter password" name="password">
+										<input type="password" class="form-control" placeholder="Enter password" name="password" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-2" for="email">Email:</label>
 									<div class="col-sm-10">
-										<input type="email" class="form-control" placeholder="Enter email" name="email">
+										<input type="email" class="form-control" placeholder="Enter email" name="email" required>
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label class="control-label">Complete Name:</label>
-										<input type="text" class="form-control" placeholder="First name" name="firstname">
+										<input type="text" class="form-control" placeholder="First name" name="firstname" required>
 									</div>
 									<div class="form-group col-md-6">
-										<label class="control-label">remove_this</label>
-										<input type="text" class="form-control" placeholder="Last name" name="lastname">
+										<label class="control-label">{remove_this}</label>
+										<input type="text" class="form-control" placeholder="Last name" name="lastname" required>
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
 										<label for="address">Complete Address:</label>
-										<input type="text" class="form-control" placeholder="Enter address" id="address">
+										<input type="text" class="form-control" placeholder="Enter address" name="address" required>
 									</div>
 									<div class="form-group col-md-2">
 										<label for="gender">Gender:</label>
-										<select id="gender" class="form-control">
+										<select name="gender" class="form-control">
 											<option selected>Female</option>
 											<option>Male</option>
 										</select>
 									</div>
 									<div class="form-group col-md-4">
 										<label for="billingProof">Proof of Billing:</label>
-										<input type="file" class="form-control" id="billingProof">
+										<input type="file" class="form-control" name="billingProof">
 									</div>
+								</div>
+								<div class="col-md-2">
+									<input type="date" class="form-control" name="birthday" required>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">

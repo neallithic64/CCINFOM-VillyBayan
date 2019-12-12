@@ -1,45 +1,61 @@
 package ccinfom.entities;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class User {
+	private String email;
+	private String username;
+	private String password;
+	private char sex;
 	private String firstname;
 	private String lastname;
-	private String email;
-	private String password;
-	
-	public User(String first, String last, String em, String pass) {
-		firstname = first;
-		lastname = last;
-		email = em;
-		password = pass;
-	}
-	
-	public String getFirstN() {
-		return firstname;
-	}
-	public String getLastN() {
-		return lastname;
+	private Date birthday;
+
+	public User(String email, String username, String password, char sex, String firstname, String lastname, LocalDate birthday) {
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.sex = sex;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.birthday = Date.valueOf(birthday);
 	}
 	public String getEmail() {
 		return email;
 	}
+	public String getUsername() {
+		return username;
+	}
 	public String getPassword() {
 		return password;
 	}
+	public char getSex() {
+		return sex;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public Date getBirthday() {
+		return birthday;
+	}
 	
-	public void register() {
+	public boolean register() {
 		try {
-			String query = "INSERT INTO accessservicedb.USERS (username, password, completename, currentpoints) VALUES (?,?,?,?)";
+			String query = "INSERT INTO accessservicedb.USERS (email, username, password, sex, birthday) VALUES (?,?,?,?,?)";
 			// 1. Connect to the database
 			Connection conn;
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/CCINFOM?useTimezone=true&serverTimezone=UTC&user=admin&password=p@ssword");
 			// 2. Prepare the SQL Statement
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, lastname);
-			stmt.setString(2, firstname);
-			stmt.setString(3, email);
-			stmt.setString(4, password);
+			stmt.setString(1, email);
+			stmt.setString(2, username);
+			stmt.setString(3, password);
+			stmt.setString(4, Character.toString(sex));
+			stmt.setDate(5, (Date)birthday);
 			// 3. Execute the SQL Statement
 			stmt.executeUpdate();
 			// 4. Process the results
@@ -47,8 +63,10 @@ public class User {
 			// 5. Disconnect
 			stmt.close();
 			conn.close();
+			return true;
 		} catch (Exception e) {
 			System.out.println("something went wrong" + e.getMessage());
+			return false;
 		}
 	}
 	
@@ -71,7 +89,7 @@ public class User {
 			// 4. Process the results
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				
+				//rs.
 			}
 			// 5. Disconnect
 			stmt.close();
