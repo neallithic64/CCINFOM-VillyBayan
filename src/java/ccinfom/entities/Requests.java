@@ -6,6 +6,8 @@ import java.sql.*;
 public class Requests {
 	private ArrayList<Integer> reqList;
 	private ArrayList<String> resiList;
+	private ArrayList<Integer> groupList;
+	private ArrayList<Integer> slotList;
 	
 	private int req_no;
 	private Date date_created;
@@ -28,12 +30,20 @@ public class Requests {
 	public Requests() {
 		reqList = new ArrayList<>();
 		resiList = new ArrayList<>();
+		groupList = new ArrayList<>();
+		slotList = new ArrayList<>();
 	}
 	public ArrayList<Integer> getReqList() {
 		return reqList;
 	}
 	public ArrayList<String> getResiList() {
 		return resiList;
+	}
+	public ArrayList<Integer> getGroupList() {
+		return groupList;
+	}
+	public ArrayList<Integer> getSlotList() {
+		return slotList;
 	}
 	public void setReq_no(int req_no) {
 		this.req_no = req_no;
@@ -91,12 +101,40 @@ public class Requests {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT  FROM requests");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM residents;");
 			ResultSet rs = pstmt.executeQuery();
-			reqList.clear();
+			resiList.clear();
 			while (rs.next())
-				reqList.add(rs.getInt("request_no"));
-			System.out.println("size of results: " + reqList.size());
+				resiList.add(rs.getString("resident_email"));
+			System.out.println("size of results: " + resiList.size());
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+		}
+	}
+	public void getAllGroupIDs() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM accessservicedb.groups;;");
+			ResultSet rs = pstmt.executeQuery();
+			groupList.clear();
+			while (rs.next())
+				groupList.add(rs.getInt("group_id"));
+			System.out.println("size of results: " + groupList.size());
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+		}
+	}
+	public void getAllSlotIDs() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM timeslots;");
+			ResultSet rs = pstmt.executeQuery();
+			slotList.clear();
+			while (rs.next())
+				slotList.add(rs.getInt("slot_id"));
+			System.out.println("size of results: " + slotList.size());
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
 		}
