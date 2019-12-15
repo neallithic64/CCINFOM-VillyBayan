@@ -17,9 +17,6 @@
 		cancellation_fee	decimal(9,2)
 		cancellation_reason	varchar(100)
 		total_amount		decimal(9,2)
-		resident_email		varchar(100)
-		group_id			int(8)
-		slot_id				int(8)
 -->
 
 <html>
@@ -39,43 +36,48 @@
 		%>
 		<h3 class="col-sm-offset-1">Create Request...</h3>
 			<div class="container">
-				<!--<h4 class="col-sm-offset-2 container">Shortcut Requesting!</h4>-->
 				<form class="form-horizontal" action="procNewReq.jsp" method="POST">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="resi_email">Email:</label>
-						<select class="col-sm-10 form-control" name="resi_email">
-							<%	int index, size = reqReport.getResiList().size();
-								for (index = 0; index < size; index++) { %>
-									<option value="<%=reqReport.getResiList().get(index)%>"> <%=reqReport.getResiList().get(index)%></option>
-							<%	}
-							%>
-						</select>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="group_id">Group ID</label>
-						<select class="col-sm-10 form-control" name="group_id">
-							<%	size = reqReport.getGroupList().size();
-								for (index = 0; index < size; index++) { %>
-									<option value="<%=reqReport.getGroupList().get(index)%>"> <%=reqReport.getGroupList().get(index)%></option>
-							<%	}
-							%>
-						</select>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="slot_id">Slot ID</label>
-						<select class="col-sm-10 form-control" name="slot_id">
-							<%	size = reqReport.getSlotList().size();
-								for (index = 0; index < size; index++) { %>
-									<option value="<%=reqReport.getSlotList().get(index)%>"> <%=reqReport.getSlotList().get(index)%></option>
-							<%	}
-							%>
-						</select>
+						<label class="control-label col-sm-2" for="spec_inst">Special Instructions:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" placeholder="Special instructions" name="spec_inst" required>
+						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="password">Password:</label>
+						<label class="control-label col-sm-2" for="resi_email">Email:</label>
 						<div class="col-sm-10">
-							<input type="" class="form-control" placeholder="Enter password" name="password">
+							<select class="form-control" name="resi_email">
+								<%	int index, size = reqReport.getResiList().size();
+									for (index = 0; index < size; index++) { %>
+										<option value="<%=reqReport.getResiList().get(index)%>"> <%=reqReport.getResiList().get(index)%></option>
+								<%	}
+								%>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="group_id">Group ID</label>
+						<div class="col-sm-10">
+							<select class="form-control" name="group_id">
+								<%	size = reqReport.getGroupList().size();
+									for (index = 0; index < size; index++) { %>
+										<option value="<%=reqReport.getGroupList().get(index)%>"> <%=reqReport.getGroupList().get(index)%></option>
+								<%	}
+								%>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="slot_id">Slot ID</label>
+						<div class="col-sm-10">
+							<select class="form-control" name="slot_id">
+								<%	size = reqReport.getSlotList().size();
+									for (index = 0; index < size; index++) { %>
+										<option value="<%=reqReport.getSlotList().get(index)%>"> <%=reqReport.getSlotList().get(index)%></option>
+								<%	}
+								%>
+							</select>
 						</div>
 					</div>
 					
