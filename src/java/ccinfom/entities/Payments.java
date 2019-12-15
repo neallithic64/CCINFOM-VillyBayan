@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.sql.*;
 
 public class Payments {
+	private ArrayList<Integer> paymentList;
 	private ArrayList<Integer> reqList;
 	private ArrayList<String> resiList;
 	
@@ -16,16 +17,16 @@ public class Payments {
 	public int req_no;
 	
 	public Payments() {
-		payment_id = 0;
-		amount = 0;
-		req_no = 0;
-		
+		paymentList = new ArrayList<>();
 		reqList = new ArrayList<>();
 		resiList = new ArrayList<>();
 	}
 	
 	/* Getters for the ArrayLists
 	*/
+	public ArrayList<Integer> getPaymentList(){
+		return paymentList;
+	}
 	public ArrayList<Integer> getReqList() {
 		return reqList;
 	}
@@ -35,21 +36,35 @@ public class Payments {
 	
 	/* Populating ArrayLists with database data
 	*/
-	public void getReqNos() {
+	public void getAllPayments() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT payment_id FROM payments ORDER BY payment_id;");
+			ResultSet rs = pstmt.executeQuery();
+			paymentList.clear();
+			while (rs.next())
+				paymentList.add(rs.getInt("request_no"));
+			System.out.println("size of results: " + paymentList.size());
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+		}
+	}
+
+	public void getAllRequests() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
 			ResultSet rs = pstmt.executeQuery();
-			reqlist.clear();
+			reqList.clear();
 			while (rs.next())
-				reqlist.add(rs.getInt("requests"));
-			System.out.println("size of results: " + reqlist.size());
+				reqList.add(rs.getInt("payment_id"));
+			System.out.println("size of results: " + reqList.size());
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
 		}
 	}
-	
 	public void getAllResidents() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -75,13 +90,33 @@ public class Payments {
 			if (rs.next()) {
 				payment_id = rs.getInt("payment_id");
 				payment_date = rs.getDate("payment_date");
-				payment_time = rs.getDate("payment_time");
+				payment_time = rs.getTime("payment_time");
 				amount = rs.getDouble("amount");
 				status = rs.getString("status");
 				resident_email = rs.getString("resident_email");
 				req_no = rs.getInt("req_no");
 	
 			}
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+		}
+	}
+	
+	/* Helper method to get the next request_no, to avoid data clashing of
+		primary key. Sets req_no to the next available request_no
+	*/
+	public void getNextPaymentId() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT payment_id FROM payments order by payment_id;");
+			ResultSet rs = pstmt.executeQuery();
+			payment_id = 0;
+			while (rs.next())
+				payment_id = rs.getInt(1);
+			payment_id++;
+			pstmt.close();
+			conn.close();
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
 		}
@@ -116,6 +151,8 @@ public class Payments {
 			return false;
 		}
 	}
+	
+
 	
 	/* Update the payment record that matches the input payment_id input/parameter
 	*/
@@ -161,6 +198,24 @@ public class Payments {
 			System.out.println("error! " + e.getMessage());
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String strData = "Payment ID " + payment_id + "\n";
+		strData += "\tPayment Date: " + payment_date.toString() + "\n";
+		strData += "\tPayment Time: " + payment_date.toString() + "\n";
+		strData += "\tAmount: " + amount + "\n";
+		
+		switch (status) {
+			case "P": strData += "\tStatus: Paid\n"; break;
+			case "U": strData += "\tStatus: Unpaid\n"; break;
+		}
+
+		strData += "\tResident Email: " + resident_email + "\n";
+		strData += "Request Number " + req_no + "\n";
+		
+		return strData;
 	}
 }
 	
