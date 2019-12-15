@@ -1,24 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "java.util.*, ccinfom.entities.*" %>
 
-<!-- Columns:
-		request_no			int(8) PK
-		date_created		date
-		date_processed		date
-		status				enum('S','D','C','X','P')
-		homeservice			enum('Y','N')
-		special_instruct	varchar(100)
-		saved_date			date
-		confirmed_date		date
-		cancelled_date		date
-		completed_date		date
-		confirmed_time		time
-		cancelled_time		time
-		cancellation_fee	decimal(9,2)
-		cancellation_reason	varchar(100)
-		total_amount		decimal(9,2)
--->
-
 <html>
 	<head>
 		<title>Creating Request</title>
