@@ -151,6 +151,7 @@ public class Requests {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests order by request_no;");
 			ResultSet rs = pstmt.executeQuery();
+			req_no = 0;
 			while (rs.next())
 				req_no = rs.getInt(1);
 			req_no++;
