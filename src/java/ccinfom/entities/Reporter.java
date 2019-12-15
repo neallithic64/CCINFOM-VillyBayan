@@ -43,20 +43,19 @@ public class Reporter {
 	public void report4(int year, String supplier_email) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicesdb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("" +
-					"SELECT		AVG(overall) AS "Overall Rating", AVG(service) AS Service," +
-					"AVG(value) AS Value, AVG(Timeliness) AS Timeliness, AVG(Politeness) AS Politeness"
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicesdb?user=root&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT		AVG(overall) AS \"Overall Rating\", AVG(service) AS Service, " +
+					"AVG(value) AS Value, AVG(Timeliness) AS Timeliness, AVG(Politeness) AS Politeness " +
 					"FROM		reqratings r JOIN requests req ON r.request_no = req.request_no " +
-					"WHERE		req.slot_id IN (SELECT t.slot_id FROM timeslots t" +
-					"							WHERE t.service_id IN (SELECT s.service_id FROM services s" +
-					"												   WHERE supplier_email = ?)" +
-					"												   )" +
-					"			AND	YEAR(completed_date) = ?)" +
-					"GROUP BY 	month(req.completed_date)" +
-					"ORDER BY	month(req.completed_date)")
+					"WHERE		req.slot_id IN (SELECT t.slot_id FROM timeslots t " +
+					"WHERE t.service_id IN (SELECT s.service_id FROM services s " +
+					"WHERE supplier_email = ?) " +
+					") " +
+					"AND	YEAR(completed_date) = ?) " +
+					"GROUP BY 	month(req.completed_date) " +
+					"ORDER BY	month(req.completed_date)");
 			pstmt.setInt(1, year);
-			pstmt.setInt(2, supplier_email);
+			pstmt.setString(2, supplier_email);
 			ResultSet rs = pstmt.executeQuery();
 
 			overallList.clear();
@@ -88,7 +87,7 @@ public class Reporter {
 	public void report5(int month, int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		s.name AS ServiceName, SUM(p.amount) AS TotalPayments " +
 															"FROM		services s " +
 															"	JOIN	timeslots t " +
