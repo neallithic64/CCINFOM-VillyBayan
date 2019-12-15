@@ -33,7 +33,7 @@ public class Reporter {
 	public void report5(int month, int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicesdb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		s.name AS ServiceName, SUM(p.amount) AS TotalPayments " +
 															"FROM		services s " +
 															"	JOIN	timeslots t " +
