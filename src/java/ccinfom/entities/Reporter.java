@@ -9,8 +9,11 @@ public class Reporter {
 	*/
 	
 	// Report 1: 
-	
-	
+	public ArrayList<Integer> monthList
+	public ArrayList<Integer> completedList
+	public ArrayList<Integer> cancelledList
+	public ArrayList<Double> salesList
+
 	// Report 4:
 	public ArrayList<Double> overallList;
 	public ArrayList<Double> servicesList;
@@ -25,8 +28,14 @@ public class Reporter {
 	/* Constructor. Instantiate your ArrayLists here! */
 	public Reporter() {
 		
+		monthList = new ArrayList<>();
+		completedList = new ArrayList<>();
+		cancelledList = new ArrayList<>();
+		salesList = new ArrayList<>();
+		
 		servList = new ArrayList<>();
 		totpayList = new ArrayList<>();
+		
 		overallList = new ArrayList<>();
 		servicesList = new ArrayList<>();
 		valueList = new ArrayList<>();
@@ -34,7 +43,48 @@ public class Reporter {
 		politenessList = new ArrayList<>();
 	}
 
-
+	/** Report 1: Monthly completed and cancelled service requests and total sales given a specific year
+	 * 
+	 * @param year User-specified year
+	 */
+	public void report5(int year) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT		A.Month, A.Completed_Service_Requests, B.Cancelled_Service_Requests, C.Total_Sales " +
+															"FROM		(SELECT	Month(r.date_created) AS Month, COUNT(r.completed_date) AS Completed_Service_Requests " +
+															"				FROM		requests r " +
+															"				WHERE		r.completed_date IS NOT NULL AND YEAR(r.date_created) = ? " +
+															"				ORDER BY	Month(r.completed_date)) A " +
+															"LEFT JOIN		(SELECT	Month(r.date_created) AS Month, COUNT(r.cancelled_date) AS Cancelled_Service_Requests " +
+															"				FROM		requests r " +
+															"				WHERE		r.cancelled_date IS NOT NULL AND YEAR(r.date_created) = ? " +
+															"				ORDER BY	Month(r.completed_date)) B ON A.Month = B.Month " +
+																"LEFT JOIN		(SELECT	Month(r.date_created) AS Month, SUM(p.amount) AS Total_Sales " +
+																"				FROM		requests r 		JOIN payments p" +
+																"											ON	p.req_no = r.req_no" +
+																"				WHERE		r.cancelled_date IS NOT NULL AND p.status = 'P' AND YEAR(r.date_created) = ? " +
+																"				ORDER BY	MONTH(r.completed_date)) C ON B.Month = C.Month; ");
+			pstmt.setInt(1, year);
+			ResultSet rs = pstmt.executeQuery();
+			monthList.clear();
+			completedList.clear();
+			cancelledList.clear();
+			salesList.clear();
+			while (rs.next()) {
+				servList.add(rs.getInteger(1));
+				completedList.add(rs.getInteger(2));
+				cancelledList.add(rs.getInteger(3);
+				salesList.add(rs.getDouble(4));
+			}
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			System.out.println("error generating report! " + e.getMessage());
+		}
+	}
+	 
+	 
 	/** Report 4: Monthly ratings per year
 	 *
 	 * @param year User-specified year
