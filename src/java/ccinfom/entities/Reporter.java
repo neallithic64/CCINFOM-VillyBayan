@@ -47,7 +47,7 @@ public class Reporter {
 	 * 
 	 * @param year User-specified year
 	 */
-	public void report5(int year) {
+	public void report1(int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
