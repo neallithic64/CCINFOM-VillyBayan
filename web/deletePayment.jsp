@@ -19,9 +19,9 @@
         <div class="container">
             <form class="form-horizontal" action="procDelPay.jsp" method="POST">
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="dispPaymentId">Select Payment ID:</label>
+                    <label class="control-label col-sm-2" for="delPaymentId">Select Payment ID:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="dispPaymentId">
+                        <select class="form-control" name="delPaymentId">
                             <%	int index, size = paymentReport.getPaymentList().size();
                                 for (index = 0; index < size; index++) { %>
                             <option value="<%=paymentReport.getPaymentList().get(index)%>"> <%=paymentReport.getPaymentList().get(index)%></option>
