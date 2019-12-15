@@ -55,7 +55,7 @@ public class Reqratings {
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                req_no = rs.getInt("request_no");
+                this.req_no = rs.getInt("request_no");
                 service = rs.getInt("service");
                 value = rs.getInt("value");
                 timeliness = rs.getInt("timeliness");
@@ -90,11 +90,7 @@ public class Reqratings {
     }
 
     public void computeOverall() {
-        try {
-            overall = req_no+service+value+timeliness+politeness;
-        } catch (Exception e) {
-            System.out.println("error! " + e.getMessage());
-        }
+        overall = req_no+service+value+timeliness+politeness;
     }
 
     /*
