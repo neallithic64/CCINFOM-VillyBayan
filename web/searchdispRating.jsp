@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="req_no">Select Request Number:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="dispReqNo">
+                        <select class="form-control" name="req_no">
                             <%	int index, size = ratingReport.getReqList().size();
                                 for (index = 0; index < size; index++) { %>
                             <option value="<%=ratingReport.getReqList().get(index)%>"> <%=ratingReport.getReqList().get(index)%></option>

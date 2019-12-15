@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Reqratings {
 
     private ArrayList<Integer> reqlist;
+    private ArrayList<String> suppList;
 
     public int req_no;
     public int service;
@@ -31,6 +32,7 @@ public class Reqratings {
     public ArrayList<Integer> getReqList() {
         return reqlist;
     }
+    public ArrayList<String> getSuppList() { return suppList; }
 
     public void getReqNos() {
         try {
@@ -46,6 +48,22 @@ public class Reqratings {
             System.out.println("error! " + e.getMessage());
         }
     }
+
+    public void getAllSuppliers() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM suppliers ORDER BY supplier_email");
+            ResultSet rs = pstmt.executeQuery();
+            suppList.clear();
+            while (rs.next())
+                suppList.add(rs.getString("supplier_email"));
+            System.out.println("size of results: " + suppList.size());
+        } catch (Exception e) {
+            System.out.println("error! " + e.getMessage());
+        }
+    }
+
 
     public void getRateData(int req_no) {
         try {
