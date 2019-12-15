@@ -23,8 +23,8 @@
 			
 			Thread.sleep(5*1000);
 			if (newRq.newRequest())
-				response.sendRedirect("newRqSucc.html");
-			else response.sendRedirect("newRqFail.html");
+				response.sendRedirect("procRqSucc.html");
+			else response.sendRedirect("procRqFail.html");
 		%>
 		
     </body>

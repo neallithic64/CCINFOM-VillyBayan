@@ -3,7 +3,8 @@ package ccinfom.entities;
 import java.util.ArrayList;
 import java.sql.*;
 
-/* ArrayLists represent foreign key datasets from other tables, used in creation of a request
+/* First four ArrayLists represent foreign key datasets from other tables, used
+	in creation of a request
 */
 public class Requests {
 	private ArrayList<Integer> reqList;
@@ -14,8 +15,8 @@ public class Requests {
 	public int req_no;
 	public Date date_created;
 	public Date date_processed;
-	public char status;
-	public char homeservice;
+	public String status;
+	public String homeservice;
 	public String special_inst;
 	public Date saved_date;
 	public Date confirmed_date;
@@ -173,36 +174,30 @@ public class Requests {
 	}
 	
 	/* Update the request record that matches the input request_no input/parameter
+		with the currently-set attributes of the object
 	*/
 	public boolean updateRequest(int updateReqNo) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("UPDATE requests "
-					+ "SET date_created = ?, date_processed = ?, status = ?, homeservice = ?,"
-					+ "special_instruct = ?, saved_date = ?, confirmed_date = ?, cancelled_date = ?,"
-					+ "completed_date = ?, confirmed_time = ?, cancelled_time = ?, cancellation_fee = ?,"
-					+ "cancellation_reason = ?, total_amount = ?, resident_email = ?, group_id = ?, slot_id = ? "
+					+ "SET date_created = ?, date_processed = ?, status = ?, homeservice = ?, special_instruct = ?, "
+					+ "cancellation_fee = ?, cancellation_reason = ?, total_amount = ?, resident_email = ?, group_id = ?, "
+					+ "slot_id = ? "
 					+ "WHERE request_no = ?");
 			
 			pstmt.setDate(1, date_created);
 			pstmt.setDate(2, date_processed);
-			pstmt.setString(3, "S");
-			pstmt.setString(4, "Y");
+			pstmt.setString(3, status);
+			pstmt.setString(4, homeservice);
 			pstmt.setString(5, special_inst);
-			pstmt.setDate(6, saved_date);
-			pstmt.setDate(7, confirmed_date);
-			pstmt.setDate(8, cancelled_date);
-			pstmt.setDate(9, completed_date);
-			pstmt.setTime(10, confirmed_time);
-			pstmt.setTime(11, cancelled_time);
-			pstmt.setDouble(12, cancellation_fee);
-			pstmt.setString(13, cancellation_reason);
-			pstmt.setDouble(14, total_amount);
-			pstmt.setString(15, resident_email);
-			pstmt.setInt(16, group_id);
-			pstmt.setInt(17, slot_id);
-			pstmt.setInt(18, updateReqNo);
+			pstmt.setDouble(6, cancellation_fee);
+			pstmt.setString(7, cancellation_reason);
+			pstmt.setDouble(8, total_amount);
+			pstmt.setString(9, resident_email);
+			pstmt.setInt(10, group_id);
+			pstmt.setInt(11, slot_id);
+			pstmt.setInt(12, updateReqNo);
 			
 			pstmt.execute();
 			pstmt.close();
@@ -212,5 +207,25 @@ public class Requests {
 			System.out.println("error! " + e.getMessage());
 			return false;
 		}
+	}
+	
+	public boolean deletePayment(int delPayID) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM payments WHERE payment_id= ?");
+			pstmt.setInt(1, delPayID);
+			pstmt.execute();
+			pstmt.close();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public void makeReport() {
+		
 	}
 }
