@@ -19,12 +19,12 @@ public class Reqratings {
     public int overall;
 
     public Reqratings(){
-        req_no=NULL;
-        service=NULL;
-        value=NULL;
-        timeliness=NULL;
-        politeness=NULL;
-        overall=NULL;
+        req_no = 0;
+        service = 0;
+        value = 0;
+        timeliness = 0;
+        politeness = 0;
+        overall = 0;
 
         reqlist = new ArrayList<>();
     }
@@ -32,12 +32,14 @@ public class Reqratings {
     public ArrayList<Integer> getReqList() {
         return reqlist;
     }
-    public ArrayList<String> getSuppList() { return suppList; }
+    public ArrayList<String> getSuppList() {
+		return suppList;
+	}
 
     public void getReqNos() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
             ResultSet rs = pstmt.executeQuery();
             reqlist.clear();
@@ -52,7 +54,7 @@ public class Reqratings {
     public void getAllSuppliers() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM suppliers ORDER BY supplier_email");
             ResultSet rs = pstmt.executeQuery();
             suppList.clear();
@@ -68,7 +70,7 @@ public class Reqratings {
     public void getRateData(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqratings WHERE request_no = ?");
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
@@ -90,20 +92,17 @@ public class Reqratings {
     private boolean isValNull() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqratings WHERE request_no = ?");
-
-            pstmt.setInt(req_no)
+            pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
-
-            rs.next();
-
-            for(int i=2; i<=6) {
-                if (rs.getInt(i) == NULL)
-                    return true;
-            }
-
-            return false;
+			boolean allNull = false;
+            while (rs.next())
+                if (rs.getInt(1) == java.sql.Types.NULL)
+                    allNull = true;
+			pstmt.close();
+			conn.close();
+            return allNull;
         }
         catch (Exception e) {
             System.out.println("error! " + e.getMessage());
@@ -115,16 +114,18 @@ public class Reqratings {
         overall = req_no+service+value+timeliness+politeness;
     }
 
-    /*
-    Method returns true if INSERT is successful, false otherwise.
+	/* Method returns true if INSERT is successful, false otherwise.
 	*/
     public boolean newRating() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 
-            if (isValNull())
-                return false;
+            if (isValNull()) {
+				conn.close();
+				return false;
+			}
+                
 
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO reqratings VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, req_no);
@@ -132,12 +133,8 @@ public class Reqratings {
             pstmt.setInt(3, value);
             pstmt.setInt(4, timeliness);
             pstmt.setInt(5, politeness);
-
             computeOverall();
-
             pstmt.setInt(6, overall);
-
-
             pstmt.execute();
             pstmt.close();
             conn.close();
@@ -154,7 +151,7 @@ public class Reqratings {
     public boolean updateRating(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("UPDATE reqratings "
                     + "SET service = ?, value = ?, timeliness = ?, politeness = ?, overall = ?, "
                     + "WHERE request_no = ?");
@@ -182,7 +179,7 @@ public class Reqratings {
     public boolean deleteRating(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM reqratings WHERE request_no= ?");
             pstmt.setInt(1, req_no);
             pstmt.execute();

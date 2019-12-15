@@ -57,7 +57,7 @@ public class Requests {
 	public void getAllResidents() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM residents ORDER BY resident_email");
 			ResultSet rs = pstmt.executeQuery();
 			resiList.clear();
@@ -71,7 +71,7 @@ public class Requests {
 	public void getAllGroupIDs() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM accessservicedb.groups ORDER BY group_id");
 			ResultSet rs = pstmt.executeQuery();
 			groupList.clear();
@@ -85,7 +85,7 @@ public class Requests {
 	public void getAllSlotIDs() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM timeslots ORDER BY slot_id;");
 			ResultSet rs = pstmt.executeQuery();
 			slotList.clear();
@@ -99,7 +99,7 @@ public class Requests {
 	public void getAllRequests() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
 			ResultSet rs = pstmt.executeQuery();
 			reqList.clear();
@@ -113,7 +113,7 @@ public class Requests {
 	public void getReqData(int reqno_Query) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM requests WHERE request_no = ?");
 			pstmt.setInt(1, reqno_Query);
 			ResultSet rs = pstmt.executeQuery();
@@ -148,7 +148,7 @@ public class Requests {
 	public void getNextReqNo() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests order by request_no;");
 			ResultSet rs = pstmt.executeQuery();
 			req_no = 0;
@@ -174,7 +174,7 @@ public class Requests {
 	public boolean newRequest() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("INSERT INTO requests VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, req_no);
 			pstmt.setDate(2, date_created);
@@ -211,7 +211,7 @@ public class Requests {
 	public boolean updateRequest(int updateReqNo) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("UPDATE requests "
 					+ "SET date_created = ?, date_processed = ?, status = ?, homeservice = ?, special_instruct = ?, "
 					+ "cancellation_fee = ?, cancellation_reason = ?, total_amount = ?, resident_email = ?, group_id = ?, "
@@ -244,7 +244,7 @@ public class Requests {
 	public boolean deletePayment(int delPayID) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM payments WHERE payment_id= ?");
 			pstmt.setInt(1, delPayID);
 			pstmt.execute();

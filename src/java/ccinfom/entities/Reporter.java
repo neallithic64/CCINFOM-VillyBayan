@@ -9,10 +9,10 @@ public class Reporter {
 	*/
 	
 	// Report 1: 
-	public ArrayList<Integer> monthList
-	public ArrayList<Integer> completedList
-	public ArrayList<Integer> cancelledList
-	public ArrayList<Double> salesList
+	public ArrayList<Integer> monthList;
+	public ArrayList<Integer> completedList;
+	public ArrayList<Integer> cancelledList;
+	public ArrayList<Double> salesList;
 
 	// Report 4:
 	public ArrayList<Double> overallList;
@@ -27,7 +27,6 @@ public class Reporter {
 	
 	/* Constructor. Instantiate your ArrayLists here! */
 	public Reporter() {
-		
 		monthList = new ArrayList<>();
 		completedList = new ArrayList<>();
 		cancelledList = new ArrayList<>();
@@ -47,10 +46,10 @@ public class Reporter {
 	 * 
 	 * @param year User-specified year
 	 */
-	public void report5(int year) {
+	public void report1(int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		A.Month, A.Completed_Service_Requests, B.Cancelled_Service_Requests, C.Total_Sales " +
 															"FROM		(SELECT	Month(r.date_created) AS Month, COUNT(r.completed_date) AS Completed_Service_Requests " +
 															"				FROM		requests r " +
@@ -72,9 +71,9 @@ public class Reporter {
 			cancelledList.clear();
 			salesList.clear();
 			while (rs.next()) {
-				servList.add(rs.getInteger(1));
-				completedList.add(rs.getInteger(2));
-				cancelledList.add(rs.getInteger(3);
+				monthList.add(rs.getInt(1));
+				completedList.add(rs.getInt(2));
+				cancelledList.add(rs.getInt(3));
 				salesList.add(rs.getDouble(4));
 			}
 			pstmt.close();
