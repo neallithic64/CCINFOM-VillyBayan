@@ -24,7 +24,7 @@
 			
 			Thread.sleep(5*1000);
 			if (newPayment.newPayment())
-				response.sendRedirect("procPayementSucc.html");
+				response.sendRedirect("procPaymentSucc.html");
 			else response.sendRedirect("procPaymentFail.html");
 		%>
 		
