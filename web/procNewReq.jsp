@@ -8,7 +8,7 @@
         <title>Processing Your Request...</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1 style="text-align: center">Processing submission...</h1>
 		<% Requests newRq = new Requests();
 			newRq.getNextReqNo();
 		%>
@@ -21,6 +21,7 @@
 			newRq.group_id = Integer.parseInt(request.getParameter("group_id"));
 			newRq.slot_id = Integer.parseInt(request.getParameter("slot_id"));
 			
+			Thread.sleep(5*1000);
 			if (newRq.newRequest())
 				response.sendRedirect("newRqSucc.html");
 			else response.sendRedirect("newRqFail.html");

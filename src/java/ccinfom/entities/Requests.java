@@ -3,6 +3,8 @@ package ccinfom.entities;
 import java.util.ArrayList;
 import java.sql.*;
 
+/* ArrayLists represent foreign key datasets from other tables, used in creation of a request
+*/
 public class Requests {
 	private ArrayList<Integer> reqList;
 	private ArrayList<String> resiList;
@@ -34,6 +36,8 @@ public class Requests {
 		groupList = new ArrayList<>();
 		slotList = new ArrayList<>();
 	}
+	/* Getters for the ArrayLists
+	*/
 	public ArrayList<Integer> getReqList() {
 		return reqList;
 	}
@@ -47,6 +51,8 @@ public class Requests {
 		return slotList;
 	}
 	
+	/* Populating ArrayLists with database data
+	*/
 	public void getAllResidents() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -104,6 +110,9 @@ public class Requests {
 		}
 	}
 	
+	/* Helper method to get the next request_no, to avoid data clashing of
+		primary key. Sets req_no to the next available request_no
+	*/
 	public void getNextReqNo() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -163,4 +172,45 @@ public class Requests {
 		}
 	}
 	
+	/* Update the request record that matches the input request_no input/parameter
+	*/
+	public boolean updateRequest(int updateReqNo) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("UPDATE requests "
+					+ "SET date_created = ?, date_processed = ?, status = ?, homeservice = ?,"
+					+ "special_instruct = ?, saved_date = ?, confirmed_date = ?, cancelled_date = ?,"
+					+ "completed_date = ?, confirmed_time = ?, cancelled_time = ?, cancellation_fee = ?,"
+					+ "cancellation_reason = ?, total_amount = ?, resident_email = ?, group_id = ?, slot_id = ? "
+					+ "WHERE request_no = ?");
+			
+			pstmt.setDate(1, date_created);
+			pstmt.setDate(2, date_processed);
+			pstmt.setString(3, "S");
+			pstmt.setString(4, "Y");
+			pstmt.setString(5, special_inst);
+			pstmt.setDate(6, saved_date);
+			pstmt.setDate(7, confirmed_date);
+			pstmt.setDate(8, cancelled_date);
+			pstmt.setDate(9, completed_date);
+			pstmt.setTime(10, confirmed_time);
+			pstmt.setTime(11, cancelled_time);
+			pstmt.setDouble(12, cancellation_fee);
+			pstmt.setString(13, cancellation_reason);
+			pstmt.setDouble(14, total_amount);
+			pstmt.setString(15, resident_email);
+			pstmt.setInt(16, group_id);
+			pstmt.setInt(17, slot_id);
+			pstmt.setInt(18, updateReqNo);
+			
+			pstmt.execute();
+			pstmt.close();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+			return false;
+		}
+	}
 }
