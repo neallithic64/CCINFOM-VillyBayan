@@ -9,17 +9,17 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <% Reqratings newRate = new Reqratings();
-            newRate.req_no = Integer.parseInt(request.getParameter("req_no"));
+        <% Reqratings updRate = new Reqratings();
+            updRate.req_no = Integer.parseInt(request.getParameter("req_no"));
         %>
         <p style="background-color: tomato"> <%= newRate.req_no %> </p>
         <%
-            newRate.service = Integer.parseInt(request.getParameter("service"));
-            newRate.value = Integer.parseInt(request.getParameter("value"));
-            newRate.timeliness = Integer.parseInt(request.getParameter("timeliness"));
-            newRate.politeness = Integer.parseInt(request.getParameter("politeness"));
+            updRate.service = Integer.parseInt(request.getParameter("service"));
+            updRate.value = Integer.parseInt(request.getParameter("value"));
+            updRate.timeliness = Integer.parseInt(request.getParameter("timeliness"));
+            updRate.politeness = Integer.parseInt(request.getParameter("politeness"));
 
-            if (newRate.newRating())
+            if (newRate.updateRating())
                 response.sendRedirect("procRateSucc.html");
             else response.sendRedirect("procRateFail.html");
         %>
