@@ -162,8 +162,8 @@ public class Payments {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("UPDATE payments "
 					+ "SET payment_date = ?, payment_time = ?, amount = ?, status = ?, resident_email = ?, "
-					+ "req_no = ?,"
-					+ "WHERE request_no = ?");
+					+ "request_no = ? "
+					+ "WHERE payment_id = ?");
 			
 			
 			pstmt.setDate(1, payment_date);

@@ -12,7 +12,7 @@
 </head>
     <body>
 		<% Reporter rp = new Reporter();
-			rp.report1(Integer.parseInt(request.getParameter("year")), );
+			rp.report1(Integer.parseInt(request.getParameter("year")));
 			int i, reportSize = rp.salesList.size();
 		%>
 		<div class="container">

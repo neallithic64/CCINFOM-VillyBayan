@@ -11,8 +11,8 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-		<h1 style="text-align: center">Processing Update Payment...</h1>
-		<% Requests paymentReport = new Requests();
+		<h1 style="text-align: center">Processing Search Payment...</h1>
+		<% Payments paymentReport = new Payments();
 			paymentReport.getAllPayments();
 		%>
 		<h3 class="col-sm-offset-1">Select Payment...</h3>

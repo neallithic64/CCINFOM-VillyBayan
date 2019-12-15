@@ -61,10 +61,12 @@ public class Reporter {
 															"				ORDER BY	Month(r.completed_date)) B ON A.Month = B.Month " +
 																"LEFT JOIN		(SELECT	Month(r.date_created) AS Month, SUM(p.amount) AS Total_Sales " +
 																"				FROM		requests r 		JOIN payments p" +
-																"											ON	p.req_no = r.req_no" +
+																"											ON	p.request_no = r.request_no" +
 																"				WHERE		r.cancelled_date IS NOT NULL AND p.status = 'P' AND YEAR(r.date_created) = ? " +
 																"				ORDER BY	MONTH(r.completed_date)) C ON B.Month = C.Month; ");
 			pstmt.setInt(1, year);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, year);
 			ResultSet rs = pstmt.executeQuery();
 			monthList.clear();
 			completedList.clear();
