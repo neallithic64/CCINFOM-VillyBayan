@@ -87,6 +87,10 @@ public class Reqratings {
 
             return false;
         }
+        catch (Exception e) {
+            System.out.println("error! " + e.getMessage());
+            return false;
+        }
     }
 
     public void computeOverall() {
