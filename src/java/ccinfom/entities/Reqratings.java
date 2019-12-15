@@ -27,6 +27,7 @@ public class Reqratings {
         overall = 0;
 
         reqlist = new ArrayList<>();
+		suppList = new ArrayList<>();
     }
 
     public ArrayList<Integer> getReqList() {
@@ -71,7 +72,7 @@ public class Reqratings {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqratings WHERE request_no = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqrating WHERE request_no = ?");
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -93,7 +94,7 @@ public class Reqratings {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqratings WHERE request_no = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqrating WHERE request_no = ?");
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
 			boolean allNull = false;
@@ -127,7 +128,7 @@ public class Reqratings {
 			}
                 
 
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO reqratings VALUES (?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO reqrating VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, req_no);
             pstmt.setInt(2, service);
             pstmt.setInt(3, value);
@@ -152,8 +153,8 @@ public class Reqratings {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE reqratings "
-                    + "SET service = ?, value = ?, timeliness = ?, politeness = ?, overall = ?, "
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE reqrating "
+                    + "SET service = ?, value = ?, timeliness = ?, politeness = ?, overall = ? "
                     + "WHERE request_no = ?");
 
             pstmt.setInt(1, service);
@@ -180,7 +181,7 @@ public class Reqratings {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM reqratings WHERE request_no= ?");
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM reqrating WHERE request_no= ?");
             pstmt.setInt(1, req_no);
             pstmt.execute();
             pstmt.close();

@@ -13,7 +13,7 @@
     <body>
         <h1 style="text-align: center">Processing Delete Rating...</h1>
         <% Requests ratingReport = new Requests();
-            ratingReport.get();
+            ratingReport.getAllRequests();
         %>
         <h3 class="col-sm-offset-1">Select Request...</h3>
         <div class="container">
@@ -24,7 +24,7 @@
                         <select class="form-control" name="req_no">
                             <%	int index, size = ratingReport.getReqList().size();
                                 for (index = 0; index < size; index++) { %>
-                            <option value="<%=ratingReport.getReqList().get(index)%>"> <%=reqReport.getReqList().get(index)%></option>
+                            <option value="<%=ratingReport.getReqList().get(index)%>"> <%=ratingReport.getReqList().get(index)%></option>
                             <%	}
                             %>
                         </select>

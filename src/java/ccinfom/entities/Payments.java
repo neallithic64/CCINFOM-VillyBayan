@@ -44,7 +44,7 @@ public class Payments {
 			ResultSet rs = pstmt.executeQuery();
 			paymentList.clear();
 			while (rs.next())
-				paymentList.add(rs.getInt("request_no"));
+				paymentList.add(rs.getInt("payment_id"));
 			System.out.println("size of results: " + paymentList.size());
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
@@ -59,7 +59,7 @@ public class Payments {
 			ResultSet rs = pstmt.executeQuery();
 			reqList.clear();
 			while (rs.next())
-				reqList.add(rs.getInt("payment_id"));
+				reqList.add(rs.getInt("request_no"));
 			System.out.println("size of results: " + reqList.size());
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
@@ -105,7 +105,7 @@ public class Payments {
 	/* Helper method to get the next request_no, to avoid data clashing of
 		primary key. Sets req_no to the next available request_no
 	*/
-	public void getNextPaymentId() {
+	public void getNextPaymentID() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
@@ -163,7 +163,7 @@ public class Payments {
 			PreparedStatement pstmt = conn.prepareStatement("UPDATE payments "
 					+ "SET payment_date = ?, payment_time = ?, amount = ?, status = ?, resident_email = ?, "
 					+ "req_no = ?,"
-					+ "WHERE payment_id = ?");
+					+ "WHERE request_no = ?");
 			
 			
 			pstmt.setDate(1, payment_date);

@@ -12,8 +12,10 @@
 </head>
     <body>
     <% Reporter rp = new Reporter();
-        rp.report4(Integer.parseInt(request.getParameter("year")), Integer.parseInt(request.getParameter("supplier_email")));
+        rp.report4(Integer.parseInt(request.getParameter("year")), request.getParameter("supplier_email"));
         int i, reportSize = rp.overallList.size();
+		Reqratings ratingReport = new Reqratings();
+		ratingReport.getAllSuppliers();
     %>
     <div class="container">
             <h1 style="text-align: center">Monthly Rating</h1>
@@ -47,7 +49,7 @@
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" name="supplier_email">
-                            <%	int index, size = ratingReport.getReqList().size();
+                            <%	int index, size = ratingReport.getSuppList().size();
                                 for (index = 0; index < size; index++) { %>
                             <option value="<%=ratingReport.getSuppList().get(index)%>"> <%=ratingReport.getSuppList().get(index)%></option>
                             <%	}

@@ -74,8 +74,5 @@ overall         	int(2)
                 </div>
             </form>
         </div>
-
-    <p style="background-color: tomato"> <%= ratingReport.overall %> </p>
-
     </body>
 </html>

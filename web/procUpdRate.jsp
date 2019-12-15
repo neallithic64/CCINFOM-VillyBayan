@@ -12,14 +12,14 @@
         <% Reqratings updRate = new Reqratings();
             updRate.req_no = Integer.parseInt(request.getParameter("req_no"));
         %>
-        <p style="background-color: tomato"> <%= newRate.req_no %> </p>
+        <p style="background-color: tomato"> <%= updRate.req_no %> </p>
         <%
             updRate.service = Integer.parseInt(request.getParameter("service"));
             updRate.value = Integer.parseInt(request.getParameter("value"));
             updRate.timeliness = Integer.parseInt(request.getParameter("timeliness"));
             updRate.politeness = Integer.parseInt(request.getParameter("politeness"));
 
-            if (newRate.updateRating())
+            if (updRate.updateRating(updRate.req_no))
                 response.sendRedirect("procRateSucc.html");
             else response.sendRedirect("procRateFail.html");
         %>

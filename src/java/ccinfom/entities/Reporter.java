@@ -92,15 +92,15 @@ public class Reporter {
 	public void report4(int year, String supplier_email) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicesdb?user=root&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT		AVG(overall) AS \"Overall Rating\", AVG(service) AS Service, " +
-					"AVG(value) AS Value, AVG(Timeliness) AS Timeliness, AVG(Politeness) AS Politeness " +
-					"FROM		reqratings r JOIN requests req ON r.request_no = req.request_no " +
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT		AVG(overall) AS Overall_Rating, AVG(service) AS Service, " +
+					"AVG(value) AS Value, AVG(timeliness) AS Timeliness, AVG(politeness) AS Politeness " +
+					"FROM		reqrating r JOIN requests req ON r.request_no = req.request_no " +
 					"WHERE		req.slot_id IN (SELECT t.slot_id FROM timeslots t " +
 					"WHERE t.service_id IN (SELECT s.service_id FROM services s " +
 					"WHERE supplier_email = ?) " +
 					") " +
-					"AND	YEAR(completed_date) = ?) " +
+					"AND	YEAR(completed_date) = ? " +
 					"GROUP BY 	month(req.completed_date) " +
 					"ORDER BY	month(req.completed_date)");
 			pstmt.setInt(1, year);

@@ -59,8 +59,9 @@
 						<select class="form-control" name="status">
 							<option value="P">Paid</option>
 							<option value="U">Unpaid</option>
+						</select>
 					</div>
-				</div>			
+				</div>
 				
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="resident_email">Email:</label>

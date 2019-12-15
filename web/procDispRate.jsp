@@ -15,6 +15,33 @@
         <% Reqratings rating = new Reqratings();
             rating.getRateData(Integer.parseInt(request.getParameter("req_no")));
         %>
-        <p class="container"><%= req.toString() %></p>
+        <table class="table">
+			<tbody>
+				<tr>
+					<th scope="row">Request Number</th>
+					<td><%= rating.req_no %></td>
+				</tr>
+				<tr>
+					<th scope="row">Service</th>
+					<td><%= rating.service %></td>
+				</tr>
+				<tr>
+					<th scope="row">Value</th>
+					<td><%= rating.value %></td>
+				</tr>
+				<tr>
+					<th scope="row">Politeness</th>
+					<td><%= rating.politeness %></td>
+				</tr>
+				<tr>
+					<th scope="row">Timeliness</th>
+					<td><%= rating.timeliness %></td>
+				</tr>
+				<tr>
+					<th scope="row">Overall</th>
+					<td><%= rating.overall %></td>
+				</tr>
+			</tbody>
+		</table>
     </body>
 </html>

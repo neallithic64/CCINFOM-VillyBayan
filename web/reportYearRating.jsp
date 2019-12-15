@@ -1,3 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "java.util.ArrayList, ccinfom.entities.*, java.sql.*, java.time.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +22,7 @@
                     <label class="control-label col-sm-2" for="supplier_email">Supplier Email:</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="supplier_email">
-                            <%	int index, size = ratingReport.getReqList().size();
+                            <%	int index, size = ratingReport.getSuppList().size();
                             for (index = 0; index < size; index++) { %>
                             <option value="<%=ratingReport.getSuppList().get(index)%>"> <%=ratingReport.getSuppList().get(index)%></option>
                             <%	}

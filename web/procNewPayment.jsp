@@ -16,7 +16,7 @@
 		<%
 			newPayment.payment_date = Date.valueOf(LocalDate.now());
 			newPayment.payment_time= Time.valueOf(LocalTime.now());
-			newPayment.total_amount = 100.0;
+			newPayment.amount = 100.0;
 			newPayment.status = "U";
 			newPayment.resident_email = request.getParameter("resident_email");
 			newPayment.req_no = Integer.parseInt(request.getParameter("req_no"));

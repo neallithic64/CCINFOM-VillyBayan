@@ -12,7 +12,7 @@
     </head>
     <body>
         <h1 style="text-align: center">Processing Search Rating...</h1>
-        <% Requests ratingReport = new Requests();
+        <% Reqratings ratingReport = new Reqratings();
             ratingReport.getReqNos();
         %>
         <h3 class="col-sm-offset-1">Select Request...</h3>
