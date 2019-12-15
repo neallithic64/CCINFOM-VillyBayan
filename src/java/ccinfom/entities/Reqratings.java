@@ -18,12 +18,12 @@ public class Reqratings {
     public int overall;
 
     public Reqratings(){
-        req_no=0;
-        service=0;
-        value=0;
-        timeliness=0;
-        politeness=0;
-        overall=0;
+        req_no=NULL;
+        service=NULL;
+        value=NULL;
+        timeliness=NULL;
+        politeness=NULL;
+        overall=NULL;
 
         reqlist = new ArrayList<>();
     }
