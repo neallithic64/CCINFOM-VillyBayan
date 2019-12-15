@@ -47,6 +47,14 @@ public class Reqratings {
         }
     }
 
+    public void computeOverall() {
+        try {
+            overall = req_no+service+value+timeliness+politeness;
+        } catch (Exception e) {
+            System.out.println("error! " + e.getMessage());
+        }
+    }
+
     /*
     Method returns true if INSERT is successful, false otherwise.
 	*/

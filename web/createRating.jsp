@@ -83,5 +83,9 @@ overall         	int(2)
         </div>
     </form>
 </div>
+
+<% ratingReport.computeOverall(); %>
+<p style="background-color: tomato"> <%= ratingReport.overall %> </p>
+
 </body>
 </html>
