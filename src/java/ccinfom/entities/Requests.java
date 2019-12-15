@@ -58,7 +58,7 @@ public class Requests {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM residents;");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM residents ORDER BY resident_email");
 			ResultSet rs = pstmt.executeQuery();
 			resiList.clear();
 			while (rs.next())
@@ -72,7 +72,7 @@ public class Requests {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM accessservicedb.groups;;");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM accessservicedb.groups ORDER BY group_id");
 			ResultSet rs = pstmt.executeQuery();
 			groupList.clear();
 			while (rs.next())
@@ -86,7 +86,7 @@ public class Requests {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM timeslots;");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM timeslots ORDER BY slot_id;");
 			ResultSet rs = pstmt.executeQuery();
 			slotList.clear();
 			while (rs.next())
@@ -100,12 +100,43 @@ public class Requests {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
-			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
 			ResultSet rs = pstmt.executeQuery();
 			reqList.clear();
 			while (rs.next())
 				reqList.add(rs.getInt("request_no"));
 			System.out.println("size of results: " + reqList.size());
+		} catch (Exception e) {
+			System.out.println("error! " + e.getMessage());
+		}
+	}
+	public void getReqData(int reqno_Query) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM requests WHERE request_no = ?");
+			pstmt.setInt(1, reqno_Query);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				req_no = rs.getInt("request_no");
+				date_created = rs.getDate("date_created");
+				date_processed = rs.getDate("date_processed");
+				status = rs.getString("status");
+				homeservice = rs.getString("homeservice");
+				special_inst = rs.getString("resident_email");
+				saved_date = rs.getDate("saved_date");
+				confirmed_date = rs.getDate("confirmed_date");
+				cancelled_date = rs.getDate("cancelled_date");
+				completed_date = rs.getDate("completed_date");
+				confirmed_time = rs.getTime("confirmed_time");
+				cancelled_time = rs.getTime("cancelled_time");
+				cancellation_fee = rs.getDouble("cancellation_fee");
+				cancellation_reason = rs.getString("resident_email");
+				total_amount = rs.getDouble("total_amount");
+				resident_email = rs.getString("resident_email");
+				group_id = rs.getInt("group_id");
+				slot_id = rs.getInt("slot_id");
+			}
 		} catch (Exception e) {
 			System.out.println("error! " + e.getMessage());
 		}
@@ -146,18 +177,18 @@ public class Requests {
 			PreparedStatement pstmt = conn.prepareStatement("INSERT INTO requests VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, req_no);
 			pstmt.setDate(2, date_created);
-			pstmt.setNull(3, java.sql.Types.DATE);
-			pstmt.setString(4, "S");
-			pstmt.setString(5, "Y");
+			pstmt.setDate(3, date_processed);
+			pstmt.setString(4, status);
+			pstmt.setString(5, homeservice);
 			pstmt.setString(6, special_inst);
 			pstmt.setDate(7, saved_date);
-			pstmt.setNull(8, java.sql.Types.DATE);
-			pstmt.setNull(9, java.sql.Types.DATE);
-			pstmt.setNull(10, java.sql.Types.DATE);
-			pstmt.setNull(11, java.sql.Types.TIME);
-			pstmt.setNull(12, java.sql.Types.TIME);
+			pstmt.setDate(8, confirmed_date);
+			pstmt.setDate(9, cancelled_date);
+			pstmt.setDate(10, completed_date);
+			pstmt.setTime(11, confirmed_time);
+			pstmt.setTime(12, cancelled_time);
 			pstmt.setDouble(13, cancellation_fee);
-			pstmt.setNull(14, java.sql.Types.VARCHAR);
+			pstmt.setString(14, cancellation_reason);
 			pstmt.setDouble(15, total_amount);
 			pstmt.setString(16, resident_email);
 			pstmt.setInt(17, group_id);
@@ -227,5 +258,39 @@ public class Requests {
 	
 	public void makeReport() {
 		
+	}
+	
+	@Override
+	public String toString() {
+		String strData = "Request Number " + req_no + "\n";
+		strData += "\tDate Created: " + date_created.toString() + "\n";
+		strData += "\tDate Processed: " + date_processed.toString() + "\n";
+		
+		switch (status) {
+			case "S": strData += "\tStatus: Saved\n"; break;
+			case "D": strData += "\tStatus: Deleted\n"; break;
+			case "C": strData += "\tStatus: Confirmed\n"; break;
+			case "X": strData += "\tStatus: Cancelled\n"; break;
+			case "P": strData += "\tStatus: Pending\n"; break;
+		}
+		switch (homeservice) {
+			case "Y": strData += "\tHome Service: Yes\n"; break;
+			case "N": strData += "\tHome Service: No\n"; break;
+		}
+		strData += "\tSpecial Instructions: " + special_inst + "\n";
+		strData += "\tDate Saved: " + saved_date.toString() + "\n";
+		strData += "\tDate Confirmed: " + confirmed_date.toString() + "\n";
+		strData += "\tDate Cancelled: " + cancelled_date.toString() + "\n";
+		strData += "\tDate Completed: " + completed_date.toString() + "\n";
+		strData += "\tTime Confirmed: " + confirmed_time.toString() + "\n";
+		strData += "\tTime Cancelled: " + cancelled_time.toString() + "\n";
+		strData += "\tCancellation Fee: " + cancellation_fee + "\n";
+		strData += "\tCancellation Reason: " + cancellation_reason + "\n";
+		strData += "\tTotal Amount: " + total_amount + "\n";
+		strData += "\tResident Email: " + resident_email + "\n";
+		strData += "\tGroup ID: " + group_id + "\n";
+		strData += "\tSlot ID: " + slot_id + "\n";
+		
+		return strData;
 	}
 }
