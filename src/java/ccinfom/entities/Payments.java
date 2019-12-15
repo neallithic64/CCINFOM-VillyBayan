@@ -184,12 +184,12 @@ public class Payments {
 		}
 	}
 	
-	public boolean deletePayment(int delPayID) {
+	public boolean deletePayment(int delPaymentId) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=admin&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM payments WHERE payment_id= ?");
-			pstmt.setInt(1, delPayID);
+			pstmt.setInt(1, delPaymentId);
 			pstmt.execute();
 			pstmt.close();
 			conn.close();
