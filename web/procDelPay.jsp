@@ -14,9 +14,9 @@
 		<h1 style="text-align: center">Processing Payment Delete...</h1>
 		<% Payments pay = new Payments();
 			Thread.sleep(5000);
-			if (pay.deletePayment(Integer.parseInt(request.getParameter("delPayID"))))
-				response.sendRedirect("procPaySucc.html");
-			else response.sendRedirect("procPayFail.html");
+			if (pay.deletePayment(Integer.parseInt(request.getParameter("delPaymentId"))))
+				response.sendRedirect("procPaymentSucc.html");
+			else response.sendRedirect("procPaymentFail.html");
 		%>
     </body>
 </html>
