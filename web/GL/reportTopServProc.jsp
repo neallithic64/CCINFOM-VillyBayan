@@ -67,6 +67,6 @@
 			</form>
 			<br>
 		</div>
-		<button type="button" onclick="window.location.href = 'index.html';" class="btn btn-default">Return to Home</button>
+		<button type="button" onclick="window.location.href = '/CCINFOM_LIMAWA/index.html';" class="btn btn-default">Return to Home</button>
 	</body>
 </html>

@@ -40,7 +40,7 @@ public class Reqratings {
     public void getReqNos() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
             ResultSet rs = pstmt.executeQuery();
             reqlist.clear();
@@ -55,7 +55,7 @@ public class Reqratings {
     public void getAllSuppliers() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM suppliers ORDER BY supplier_email");
             ResultSet rs = pstmt.executeQuery();
             suppList.clear();
@@ -71,7 +71,7 @@ public class Reqratings {
     public void getRateData(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqrating WHERE request_no = ?");
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
@@ -93,7 +93,7 @@ public class Reqratings {
     private boolean isValNull() {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM reqrating WHERE request_no = ?");
             pstmt.setInt(1, req_no);
             ResultSet rs = pstmt.executeQuery();
@@ -120,7 +120,7 @@ public class Reqratings {
     public boolean newRating() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 
             if (isValNull()) {
 				conn.close();
@@ -152,7 +152,7 @@ public class Reqratings {
     public boolean updateRating(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("UPDATE reqrating "
                     + "SET service = ?, value = ?, timeliness = ?, politeness = ?, overall = ? "
                     + "WHERE request_no = ?");
@@ -180,7 +180,7 @@ public class Reqratings {
     public boolean deleteRating(int req_no) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM reqrating WHERE request_no= ?");
             pstmt.setInt(1, req_no);
             pstmt.execute();

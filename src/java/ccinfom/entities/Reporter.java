@@ -49,7 +49,7 @@ public class Reporter {
 	public void report1(int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		A.Month, A.Completed_Service_Requests, B.Cancelled_Service_Requests, C.Total_Sales " +
 															"FROM		(SELECT	Month(r.date_created) AS Month, COUNT(r.completed_date) AS Completed_Service_Requests " +
 															"				FROM		requests r " +
@@ -94,7 +94,7 @@ public class Reporter {
 	public void report4(int year, String supplier_email) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		AVG(overall) AS Overall_Rating, AVG(service) AS Service, " +
 					"AVG(value) AS Value, AVG(timeliness) AS Timeliness, AVG(politeness) AS Politeness " +
 					"FROM		reqrating r JOIN requests req ON r.request_no = req.request_no " +
@@ -138,7 +138,7 @@ public class Reporter {
 	public void report5(int month, int year) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT		s.name AS ServiceName, SUM(p.amount) AS TotalPayments " +
 															"FROM		services s " +
 															"	JOIN	timeslots t " +

@@ -12,14 +12,14 @@ public class User {
 	private String lastname;
 	private Date birthday;
 
-	public User(String email, String username, String password, char sex, String firstname, String lastname, LocalDate birthday) {
+	public User(String email, String username, String password, char sex, String firstname, String lastname, Date birthday) {
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.sex = sex;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.birthday = Date.valueOf(birthday);
+		this.birthday = birthday;
 	}
 	public String getEmail() {
 		return email;
@@ -43,24 +43,22 @@ public class User {
 		return birthday;
 	}
 	
+	/* Submits a new user into the database. However, this will not always work, since the
+		email attribute is a primary key. If the email inputted is a duplicate, data won't
+		be inserted.
+	*/
 	public boolean register() {
 		try {
 			String query = "INSERT INTO accessservicedb.USERS (email, username, password, sex, birthday) VALUES (?,?,?,?,?)";
-			// 1. Connect to the database
 			Connection conn;
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/CCINFOM?useTimezone=true&serverTimezone=UTC&user=admin&password=p@ssword");
-			// 2. Prepare the SQL Statement
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, email);
 			stmt.setString(2, username);
 			stmt.setString(3, password);
 			stmt.setString(4, Character.toString(sex));
-			stmt.setDate(5, (Date)birthday);
-			// 3. Execute the SQL Statement
+			stmt.setDate(5, birthday);
 			stmt.executeUpdate();
-			// 4. Process the results
-			
-			// 5. Disconnect
 			stmt.close();
 			conn.close();
 			return true;
@@ -74,27 +72,26 @@ public class User {
 	 * this means getting the object's attributes filled out with the fields from
 	 * the MySQL database.<br>
 	 */
-	public void login() {
+	public boolean login(String email, String pass) {
+		boolean loginSuccess = false;
 		try {
-			String query = "SELECT * FROM accessservicedb.USERS;";
-			// 1. Connect to the database
-			Connection conn;
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/CCINFOM?useTimezone=true&serverTimezone=UTC&user=admin&password=p@ssword");
-			// 2. Prepare the SQL Statement
-			PreparedStatement stmt = conn.prepareStatement(query);
-			
-			// 3. Execute the SQL Statement
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM accessservicedb.USERS WHERE email = ? AND password = ?;");
+			stmt.setString(1, email);
+			stmt.setString(2, pass);
 			stmt.executeUpdate();
-			// 4. Process the results
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				//rs.
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				this.lastname = rs.getString("last_name");
+				this.firstname = rs.getString("first_name");
+				loginSuccess = true;
 			}
-			// 5. Disconnect
 			stmt.close();
 			conn.close();
 		} catch (Exception e) {
 			System.out.println("something went wrong" + e.getMessage());
 		}
+		return loginSuccess;
 	}
 }

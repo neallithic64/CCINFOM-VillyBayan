@@ -39,7 +39,7 @@ public class Payments {
 	public void getAllPayments() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT payment_id FROM payments ORDER BY payment_id;");
 			ResultSet rs = pstmt.executeQuery();
 			paymentList.clear();
@@ -54,7 +54,7 @@ public class Payments {
 	public void getAllRequests() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT request_no FROM requests ORDER BY request_no;");
 			ResultSet rs = pstmt.executeQuery();
 			reqList.clear();
@@ -68,7 +68,7 @@ public class Payments {
 	public void getAllResidents() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM residents ORDER BY resident_email");
 			ResultSet rs = pstmt.executeQuery();
 			resiList.clear();
@@ -83,7 +83,7 @@ public class Payments {
 	public void getPaymentData(int paymentno_Query) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM payments WHERE payment_id = ?");
 			pstmt.setInt(1, paymentno_Query);
 			ResultSet rs = pstmt.executeQuery();
@@ -108,7 +108,7 @@ public class Payments {
 	public void getNextPaymentID() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("SELECT payment_id FROM payments order by payment_id;");
 			ResultSet rs = pstmt.executeQuery();
 			payment_id = 0;
@@ -132,7 +132,7 @@ public class Payments {
 	public boolean newPayment() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("INSERT INTO payments VALUES (?,?,?,?,?,?,?)");
 			pstmt.setInt(1, payment_id);
 			pstmt.setDate(2, payment_date);
@@ -159,7 +159,7 @@ public class Payments {
 	public boolean updatePayment(int updatePaymentId) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("UPDATE payments "
 					+ "SET payment_date = ?, payment_time = ?, amount = ?, status = ?, resident_email = ?, "
 					+ "request_no = ? "
@@ -187,7 +187,7 @@ public class Payments {
 	public boolean deletePayment(int delPaymentId) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?user=root&password=p@ssword");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3307/accessservicedb?useTimezone=true&serverTimezone=UTC&user=root&password=p@ssword");
 			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM payments WHERE payment_id= ?");
 			pstmt.setInt(1, delPaymentId);
 			pstmt.execute();

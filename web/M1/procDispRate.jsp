@@ -43,5 +43,6 @@
 				</tr>
 			</tbody>
 		</table>
+		<button type="button" onclick="window.location.href = '/CCINFOM_LIMAWA/index.html';" class="btn btn-default">Return to Home</button>
     </body>
 </html>
